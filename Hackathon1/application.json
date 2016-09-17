@@ -1,0 +1,15 @@
+﻿{
+  "identifier": "viverbem",
+  "accessKey": "S1lGNUt1TkdXQU9mWGFWN0pvZU8=",
+  "messageReceivers": [
+    {
+      "type": "PlainTextMessageReceiver",
+      "mediaType": "text/plain"
+    }
+  ],
+  "settings": {
+    "setting1": "value1"
+  },
+  "startupType": "Startup",
+  "schemaVersion": 2
+}
