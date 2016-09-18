@@ -28,6 +28,23 @@ namespace Hackathon1
             this.cardapio = cardapio;
         }
 
+        public string cardapioToString ()
+        {
+            string s = nome + "\n";
+            string nc = "";
+            for (int i = 0; i < cardapio.Count; i++)
+            {
+                Prato prato = cardapio.ElementAt<Prato>(i);
+                s += prato.nome + "\n";
+                if (!prato.leite) nc += "leite ";
+                if (!prato.gluten) nc += "glúten ";
+                if (!prato.acucar) nc += "açúcar";
+                if (nc.Length > 0) s += "Não contém: " + nc;
+                s += "Preço: " + prato.preco+"\n";
+            }
+            return s;
+        }
+
         public void adicionarPrato(Prato prato)
         {
             cardapio.Add(prato);
