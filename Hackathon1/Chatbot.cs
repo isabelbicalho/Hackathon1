@@ -83,7 +83,7 @@ namespace Hackathon1
             if (!banco.usuarios.ContainsKey(input.From.Name))
             {
                 banco.usuarios[input.From.Name] = new Usuario();
-                banco.usuarios[input.From.Name].estado = 101;
+                banco.usuarios[input.From.Name].estado = 112;
                 Document doc = new PlainText { Text = "Qual o seu nome?" };
                 return doc;
             }
@@ -91,6 +91,24 @@ namespace Hackathon1
             {
                 switch (banco.usuarios[input.From.Name].estado)
                 {
+                    case 112:
+                        // obter nome do usuario
+                        banco.usuarios[input.From.Name].nome = mensagemUsuario;
+                        // Você restringe ao consumo do leite, açúcar ou glúten?
+                        banco.usuarios[input.From.Name].estado = 113;
+                        return new PlainText { Text = banco.respostas[112] };
+                    case 113:
+                        if (mensagemUsuario.Contains("Não"))
+                        {
+                            banco.usuarios[input.From.Name].estado = 101;
+                            goto case 101;
+                        }
+                        else
+                        {
+                            // atualizar usuario
+                            banco.usuarios[input.From.Name].estado = 101;
+                            goto case 101;
+                        }
                     case 101:
                         // Como posso te ajudar?
                         if (mensagemUsuario.Contains("Sugestão de restaurantes"))
@@ -111,6 +129,7 @@ namespace Hackathon1
                         Document opcoes = menuInicial();
                         return opcoes;
                     case 103:
+                    case 105:
                         // Algum prato específico? (salmão, frango, caldo, sopa, ...)
                         // Chamar a função para pesquisar os pratos aqui
                         if (mensagemUsuario.Contains("Não"))

@@ -24,7 +24,8 @@ namespace Hackathon1
             {108, "Posso te ajudar com mais alguma coisa?" },
             {109, "Em qual cidade você mora?" },
             {110, "Gostaria de visualizar mais algum cardápio? Se sim, qual?" },
-            {111, "Tudo bem :)" }
+            {111, "Tudo bem :)" },
+            {112, "Você restringe ao consumo do leite, açúcar ou glúten?" }
         };
 
         public void adicionarRestaurante(Restaurante restaurante)

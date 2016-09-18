@@ -11,6 +11,9 @@ namespace Hackathon1
         public string id;
         public string nome;
         public int estado = 0;
+        public bool restricaoLeite = false;
+        public bool restricaoGluten = false;
+        public bool restricaoAcucar = false;
         //pedido atual
         public string endereco;
         public string cidade;
