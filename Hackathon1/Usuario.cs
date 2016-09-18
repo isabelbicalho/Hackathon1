@@ -25,22 +25,22 @@ namespace Hackathon1
             endereco = "";
             cidade = "";
             bairro = "";
-            necessidade = Necessidade.nenhum.GetHashCode();
-            restricao = Restricao.nenhum.GetHashCode();
+            necessidade = 0;
+            restricao = 0;
             ingrediente = "";
             prato = "";
         }
     }
     public enum Necessidade
     {
-        nenhum,
+        nenhum = 0,
         receita,
         restaurante,
         delivery
     }
     public enum Restricao
     {
-        nenhum,
+        nenhum = 0,
         lactose,
         gluten,
         acucar
