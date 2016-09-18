@@ -23,7 +23,7 @@ namespace Hackathon1
         {
             Document opcoes = new Select
             {
-                Text = banco.respostas[1],
+                Text = banco.respostas[101],
                 Options = new[]
                 {
                     new SelectOption
@@ -47,33 +47,6 @@ namespace Hackathon1
                 }
             };
             return opcoes;
-        }
-
-        public DocumentCollection agregarTexto (DocumentCollection resposta, string texto)
-        {
-            Document doc = new PlainText { Text = texto };
-            Document[] newItems = new Document[resposta.Items.Length + 1];
-            resposta.Items.CopyTo(newItems, 0);
-            newItems[newItems.Length - 1] = doc;
-            resposta.Items = newItems;
-            return resposta;
-        }
-
-        public DocumentCollection agregarItem(DocumentCollection resposta, Document item)
-        {
-            List<Document> newItems = new List<Document>();
-            Document[] temp = resposta.Items;
-            if (temp != null)
-            {
-                resposta.Items = newItems.ToArray();
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    newItems.Add((Document)temp[i]);
-                }
-            }
-            newItems.Add((Document)item);
-            resposta.Items = newItems.ToArray();
-            return resposta;
         }
 
         public Document gerarResposta(Message input)
