@@ -46,7 +46,7 @@ namespace Hackathon1
                 if (cardapio.Count > 0)
                     restaurantes.Add((Restaurante)banco.restaurantes[i]);
             }*/
-            return banco.buscarRestaurante("", usuario.cidade, texto, usuario.restricaoGluten, usuario.restricaoLeite, usuario.restricaoAcucar);
+            return banco.buscarRestaurante("", usuario.cidade, contains("Não",texto)?"":contains("Nao", texto)?"":texto, usuario.restricaoGluten, usuario.restricaoLeite, usuario.restricaoAcucar);
         }
 
         public Document selectRestaurantes (List<Restaurante> restaurantes)
@@ -90,8 +90,8 @@ namespace Hackathon1
                     new SelectOption
                     {
                         Order = 2,
-                        Text = "Sugestão de restaurantes",
-                        Value = new PlainText { Text = "Sugestão de restaurantes" }
+                        Text = "Restaurantes/Lojas",
+                        Value = new PlainText { Text = "Restaurantes/Lojas" }
                     },
                     new SelectOption
                     {
@@ -149,7 +149,10 @@ namespace Hackathon1
                             ehIntolerante = true;
                         }
                         if (ehIntolerante)
+                        { 
+                            banco.usuarios[input.From.Name].estado = 101;
                             goto case 101;
+                        }
                         else if (contains("Sim", mensagemUsuario))
                         {
                             banco.usuarios[input.From.Name].estado = 114;
@@ -167,6 +170,7 @@ namespace Hackathon1
                             banco.usuarios[input.From.Name].restricaoAcucar = true;
                         if (contains("glúten", mensagemUsuario) || contains("gluten", mensagemUsuario))
                             banco.usuarios[input.From.Name].restricaoGluten = true;
+                        banco.usuarios[input.From.Name].estado = 101;
                         goto case 101;
                     case 101:
                         // Como posso te ajudar?
@@ -213,7 +217,7 @@ namespace Hackathon1
                         }
                         List<Restaurante> restaurantes = buscarRestaurantesCardapio(mensagemUsuario, input.From.Name);
                         // Se encontrou
-                        if (restaurantes.Count > 1)
+                        if (restaurantes.Count > 0)
                         {
                             banco.usuarios[input.From.Name].estado = 104;
                             return selectRestaurantes(restaurantes);

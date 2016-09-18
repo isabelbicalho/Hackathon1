@@ -31,16 +31,17 @@ namespace Hackathon1
         public string cardapioToString()
         {
             string s = nome + "\n";
-            string nc = "";
+            //string nc = "";
             for (int i = 0; i < cardapio.Count; i++)
             {
                 Prato prato = cardapio.ElementAt<Prato>(i);
-                s += prato.nome + "\n";
-                if (!prato.leite) nc += "leite ";
+                s += prato.nome + " - " + prato.preco + "\n";
+                /*if (!prato.leite) nc += "leite ";
                 if (!prato.gluten) nc += "glúten ";
                 if (!prato.acucar) nc += "açúcar";
-                if (nc.Length > 0) s += "Não contém: " + nc;
-                s += "\nPreço: " + prato.preco + "\n";
+                if (nc.Length > 0) s += "Não contém: " + nc;*/
+                //s += "\nPreço: " + prato.preco + "\n";
+                //nc = "";
             }
             return s;
         }
@@ -62,11 +63,13 @@ namespace Hackathon1
 
             foreach (Prato p in cardapio)
             {
-                if ((!restricaoGluten || p.gluten) && (!restricaoLeite || p.leite) && (!restricaoAcucar || p.acucar) &&
-                    (string.IsNullOrEmpty(pratoingrediente) || p.nome.IndexOf(pratoingrediente) >= 0 || p.buscarIngrediente(pratoingrediente).Count() > 0))
+                if ((!restricaoGluten || !p.gluten) && (!restricaoLeite || !p.leite) && (!restricaoAcucar || !p.acucar) )
                 {
-                    lst.Add(p);
-                }
+                    if ((string.IsNullOrEmpty(pratoingrediente) || p.nome.ToUpper().IndexOf(pratoingrediente) >= 0 || p.buscarIngrediente(pratoingrediente).Count() > 0))
+                    {
+                        lst.Add(p);
+                    }
+                }   
             }
 
             return lst;

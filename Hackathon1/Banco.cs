@@ -10,7 +10,7 @@ namespace Hackathon1
     {
         public Dictionary<string,Usuario> usuarios = new Dictionary<string, Usuario>();
         public List<Restaurante> restaurantes = new List<Restaurante>();
-        public List<Alimento> alimentos = new List<Alimento>();
+        public List<Receita> receitas = new List<Receita>();
         //public List<string> usuarioSaudacao = new List<string>();
 
         public Dictionary<int, String> respostas = new Dictionary<int, string>()
@@ -40,7 +40,7 @@ namespace Hackathon1
 
             foreach (Restaurante r in restaurantes)
             {
-                if ((String.IsNullOrEmpty(nome) || r.nome.IndexOf(nome) >= 0) && (String.IsNullOrEmpty(endereco) || r.endereco.IndexOf(endereco) >= 0) &&
+                if ((String.IsNullOrEmpty(nome) || r.nome.ToUpper().IndexOf(nome.ToUpper()) >= 0) && (String.IsNullOrEmpty(endereco) || r.endereco.ToUpper().IndexOf(endereco.ToUpper()) >= 0) &&
                     r.buscarCardapio(pratoingrediente, restricaoGluten, restricaoLeite, restricaoAcucar).Count() > 0)
                 {
                     lst.Add(r);
@@ -67,7 +67,10 @@ namespace Hackathon1
 
             return lst;
         }
+        public void adicionarReceita(Receita receita)
+        {
+            receitas.Add(receita);
+        }
 
     }
-
 }

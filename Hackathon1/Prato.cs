@@ -33,7 +33,7 @@ namespace Hackathon1
             List<string> lst = new List<string>();
             texto = texto.ToUpper();
 
-            foreach (string i in lst)
+            foreach (string i in ingredientes)
             {
                 if (i.ToUpper().IndexOf(texto) >= 0)
                 {

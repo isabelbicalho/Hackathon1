@@ -25,7 +25,7 @@ namespace Hackathon1
                 true, false, false));
             banco.adicionarRestaurante(restaurante1);
 
-            Restaurante restaurante2 = new Restaurante("Lev", "Rua Fernandes Tourinho 350", "30112-000");
+            Restaurante restaurante2 = new Restaurante("Lev", "Rua Fernandes Tourinho 350, Belo Horizonte", "30112-000");
             restaurante2.adicionarPrato(new Prato("Carne de soja", "R$ 15,00",
                 new List<string>(new string[] { "proteína de soja", "água", "vinagre", "azeite", "cebola", "tomate" }),
                 false, false, false));
@@ -37,7 +37,7 @@ namespace Hackathon1
                 false, false, false));
             banco.adicionarRestaurante(restaurante2);
 
-            Restaurante restaurante3 = new Restaurante("Bem Natural", "Rua Alagoas 911", "30130-160");
+            Restaurante restaurante3 = new Restaurante("Bem Natural", "Rua Alagoas 911, Belo Horizonte", "30130-160");
             restaurante3.adicionarPrato(new Prato("Legumes no vapor com molho de cebola", "R$ 12,90",
                 new List<string>(new string[] { "cenoura", "chuchu", "abobrinha", "salsinha", "cebola", "limão", "azeite", "sal" }),
                 false,false,false));
@@ -52,13 +52,13 @@ namespace Hackathon1
                 false, false, false));
             banco.adicionarRestaurante(restaurante3);
 
-            Restaurante restaurante4 = new Restaurante("Tudo verde", "Rua Claudio Pinheiro de Lima 39", "30870-020");
+            Restaurante restaurante4 = new Restaurante("Tudo verde", "Rua Claudio Pinheiro de Lima 39, Belo Horizonte", "30870-020");
             restaurante4.adicionarPrato(new Prato("Muffin de maçã light", "R$ 4,90",
                 new List<string>(new string[] { "açucar", "leite", "canela", "ovo", "farinha de trigo", "fermento" }),
                 true, true, true));
             banco.adicionarRestaurante(restaurante4);
 
-            Restaurante restaurante5 = new Restaurante("Mundo Verde", "Rua Curitiba 1982", "30170-122");
+            Restaurante restaurante5 = new Restaurante("Mundo Verde", "Rua Curitiba 1982, Contagem", "30170-122");
             restaurante5.adicionarPrato(new Prato("Quiche de palmito", "R$ 19,90",
                 new List<string>(new string[] { "sementes de chia", "oleo de coco", "palmito", "ervilha", "tomate" }),
                 false, false, false));
