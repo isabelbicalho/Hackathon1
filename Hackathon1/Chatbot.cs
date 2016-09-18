@@ -78,33 +78,51 @@ namespace Hackathon1
 
         public Document gerarResposta(Message input)
         {
+            string mensagemUsuario = input.Content.ToString();
+
             if (!banco.usuarios.ContainsKey(input.From.Name))
             {
                 banco.usuarios[input.From.Name] = new Usuario();
                 banco.usuarios[input.From.Name].estado = 1;
                 Document doc = new PlainText { Text = "Qual o seu nome?" };
-                //resposta = agregarItem(resposta, doc);
                 return doc;
-            }
-            else if (input.Content.ToString().Contains("Sugestão de restaurantes"))
-            {
-                banco.usuarios[input.From.Name].estado = 3;
-                return new PlainText { Text = banco.respostas[3] };
             }
             else
             {
                 switch (banco.usuarios[input.From.Name].estado)
                 {
                     case 1:
+                        if (mensagemUsuario.Contains("Sugestão de restaurantes"))
+                        {
+                            banco.usuarios[input.From.Name].estado = 3;
+                            return new PlainText { Text = banco.respostas[3] };
+                        }
+                        if (mensagemUsuario.Contains("Aprender receitas"))
+                        {
+                            // Inserir o estado para a primeira mensagem para as receitas
+                            return null;
+                        }
+                        if (mensagemUsuario.Contains("Delivery"))
+                        {
+                            // Inserir o estado para a primeira mensagem para delivery
+                            return null;
+                        }
                         Document opcoes = menuInicial();
                         return opcoes;
                     case 3:
+                        // Chamar a função para pesquisar os pratos aqui
+                        // Se encontrou
+                        banco.usuarios[input.From.Name].estado = 4;
+                        return null; // Retorna Select dos restaurantes
+                        // Se nao encontrou
+                        banco.usuarios[input.From.Name].estado = 5;
+                        return new PlainText { Text = banco.respostas[5] };
+                    default:
+                        return new PlainText { Text = "default" };
 
-                        break;
                 }
                 
             }
-            return null;
         }
     }
 }
