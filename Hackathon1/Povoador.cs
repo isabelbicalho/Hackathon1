@@ -103,7 +103,26 @@ namespace Hackathon1
                 "https://www.natue.com.br/natuelife/receita-de-bolo-de-tapioca.html", false, true, false);
             banco.adicionarReceita(receita6);
 
+            Receita receita7 = new Receita("Suco de couve com laranja e cenoura",
+                new List<string>(new string[] {"suco de laranja", "couve", "cenoura", "semente de girassol"}),
+                "https://www.natue.com.br/natuelife/receita-de-suco-de-couve-com-laranja-e-cenoura.html", false, false, false);
+            banco.adicionarReceita(receita7);
 
+            Receita receita8 = new Receita("Chocolate quente vegano",
+                new List<string>(new string[] {"leite vegetal", "cacau em po", "amido de milho", "extrato de baunilha", "canela em po", "acucar mascavo"}),
+                "https://www.natue.com.br/natuelife/receita-de-chocolate-quente-vegano.html", false, false, true);
+            banco.adicionarReceita(receita8);
+
+            Receita receita9 = new Receita("Nugget de soja",
+                new List<string>(new string[] { "proteína texturizada de soja", "grao-de-bico", "salsinha", "cebolinha", "ovo", "farinha de arroz", "açafrão" }),
+                "https://www.natue.com.br/natuelife/receita-de-nuggets-de-soja.html",
+                false, false, false);
+            banco.adicionarReceita(receita9);
+
+            Receita receita10 = new Receita("Suco de milho",
+                new List<string>(new string[] { "milho verde", "biomassa de banana", "inhame cozido", "acucar de coco", "xilitol" }),
+                "https://www.natue.com.br/natuelife/suco-de-milho-funcional.html", false, false, true);
+            banco.adicionarReceita(receita10);
 
         }
     }

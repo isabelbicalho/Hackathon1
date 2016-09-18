@@ -72,5 +72,10 @@ namespace Hackathon1
             receitas.Add(receita);
         }
 
+        public void adicionarReceita(Receita receita)
+        {
+            receitas.Add(receita);
+        }
+
     }
 }
