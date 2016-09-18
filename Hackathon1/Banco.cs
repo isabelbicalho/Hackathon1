@@ -68,6 +68,11 @@ namespace Hackathon1
             return lst;
         }
 
+        public void adicionarReceita(Receita receita)
+        {
+            receitas.Add(receita);
+        }
+
     }
 
 }
