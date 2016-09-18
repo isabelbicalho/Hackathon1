@@ -11,7 +11,7 @@ namespace Hackathon1
     class Chatbot
     {
         public Banco banco;
-        string[] saudacoes = { "Olá!" };
+        string[] saudacoes = { "Olá" };
         string[] despedidas = { "Obrigado pela preferência!" };
 
         public Chatbot(Banco banco)
