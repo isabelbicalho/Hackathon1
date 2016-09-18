@@ -98,6 +98,13 @@ namespace Hackathon1
                 "https://www.natue.com.br/natuelife/receita-de-canja-de-galinha.html", false, false, false);
             banco.adicionarReceita(receita5);
 
+            Receita receita6 = new Receita("Bolo de tapioca",
+                new List<string>(new string[] {"massa para tapioca", "leite de coco light", "adoçante culinario", "ovo", "oleo de coco", "fermento quimico", "coco ralado"}),
+                "https://www.natue.com.br/natuelife/receita-de-bolo-de-tapioca.html", false, true, false);
+            banco.adicionarReceita(receita6);
+
+
+
         }
     }
 }
