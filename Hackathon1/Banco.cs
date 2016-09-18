@@ -16,7 +16,7 @@ namespace Hackathon1
         public Dictionary<int, String> respostas = new Dictionary<int, string>()
         {
             {101, "Como posso te ajudar?"},
-            {102, "Gostaria de comer no local ou receber em casa?" },
+            {102, "Em qual cidade você se encontra?" },
             {103, "Algum prato específico? (salmão, frango, caldo, sopa, ...)" },
             {104, "Encontrei ótimos restaurantes para você! Qual deles gostaria de ver o cardápio?" },
             {105, "Não encontrei nenhum restaurante com esse prato :( Algum outro prato específico?" },
@@ -26,7 +26,7 @@ namespace Hackathon1
             {109, "Em qual cidade você mora?" },
             {110, "Gostaria de visualizar mais algum cardápio? Se sim, qual?" },
             {111, "Tudo bem :)" },
-            {112, "Você restringe ao consumo do leite, açúcar ou glúten?" }
+            {112, "Tem alguma restrição ao consumo do leite, açúcar ou glúten?" }
         };
 
         public void adicionarRestaurante(Restaurante restaurante)
@@ -38,10 +38,10 @@ namespace Hackathon1
         {
             List<Restaurante> lst = new List<Restaurante>();
 
-            foreach(Restaurante r in restaurantes)
+            foreach (Restaurante r in restaurantes)
             {
-                if ((String.IsNullOrEmpty(nome) || r.nome.IndexOf(nome)>=0) && (String.IsNullOrEmpty(endereco) || r.endereco.IndexOf(endereco) >= 0) &&
-                    r.buscarCardapio(pratoingrediente, restricaoGluten, restricaoLeite, restricaoAcucar).Count()>0)
+                if ((String.IsNullOrEmpty(nome) || r.nome.IndexOf(nome) >= 0) && (String.IsNullOrEmpty(endereco) || r.endereco.IndexOf(endereco) >= 0) &&
+                    r.buscarCardapio(pratoingrediente, restricaoGluten, restricaoLeite, restricaoAcucar).Count() > 0)
                 {
                     lst.Add(r);
                 }
@@ -59,7 +59,7 @@ namespace Hackathon1
             foreach (Restaurante r in restaurantes)
             {
                 aux = r.buscarCardapio(pratoingrediente, restricaoGluten, restricaoLeite, restricaoAcucar);
-                if (aux.Count()>0)
+                if (aux.Count() > 0)
                 {
                     lst.AddRange(aux);
                 }
@@ -69,4 +69,5 @@ namespace Hackathon1
         }
 
     }
+
 }

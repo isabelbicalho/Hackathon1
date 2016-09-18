@@ -15,11 +15,10 @@ namespace Hackathon1
         public bool leite;
         public bool acucar;
 
-        public Prato (string nome, string preco, List<string> ingredientes,
+        public Prato(string nome, string preco, List<string> ingredientes,
             bool gluten,
             bool leite,
-            bool acucar
-)
+            bool acucar)
         {
             this.nome = nome;
             this.ingredientes = ingredientes;
