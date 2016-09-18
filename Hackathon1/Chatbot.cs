@@ -84,14 +84,14 @@ namespace Hackathon1
                     new SelectOption
                     {
                         Order = 1,
-                        Text = "Aprender receitas",
-                        Value = new PlainText { Text = "Aprender receitas" }
+                        Text = "Restaurantes/Lojas",
+                        Value = new PlainText { Text = "Restaurantes/Lojas" }
                     },
                     new SelectOption
                     {
                         Order = 2,
-                        Text = "Restaurantes/Lojas",
-                        Value = new PlainText { Text = "Restaurantes/Lojas" }
+                        Text = "Aprender receitas",
+                        Value = new PlainText { Text = "Aprender receitas" }
                     },
                     new SelectOption
                     {
@@ -108,11 +108,20 @@ namespace Hackathon1
         {
             string mensagemUsuario = input.Content.ToString();
 
+            if (contains("tchau",mensagemUsuario) || contains("ate", mensagemUsuario) ||
+                contains("até", mensagemUsuario) || contains("ate logo", mensagemUsuario) ||
+                contains("sayonara", mensagemUsuario) || contains("inté", mensagemUsuario) ||
+                contains("vlw", mensagemUsuario))
+            {
+                if (banco.usuarios.ContainsKey(input.From.Name))
+                    banco.usuarios.Remove(input.From.Name);
+                return new PlainText { Text = banco.respostas[111] };
+            }
             if (!banco.usuarios.ContainsKey(input.From.Name))
             {
                 banco.usuarios[input.From.Name] = new Usuario();
                 banco.usuarios[input.From.Name].estado = 112;
-                Document doc = new PlainText { Text = "Qual o seu nome?" };
+                Document doc = new PlainText { Text = "Olá, sou a Ju. Tenho algumas opções de comida saborosas e saudáveis. Como você se chama?" };
                 return doc;
             }
             else
@@ -160,7 +169,7 @@ namespace Hackathon1
                         }
                         else
                         {
-                            return new PlainText { Text = "default" };
+                            return new PlainText { Text = "Me desculpe, mas não consegui entender" };
                         }
                     case 114:
                         if (contains("leite", mensagemUsuario) || contains("lactose", mensagemUsuario))
@@ -174,6 +183,27 @@ namespace Hackathon1
                         goto case 101;
                     case 101:
                         // Como posso te ajudar?
+                        Document opcoes = menuInicial();
+                        banco.usuarios[input.From.Name].estado = 1015;
+                        return opcoes;
+                        /*if (contains("Restaurantes/Lojas", mensagemUsuario))
+                        {
+                            banco.usuarios[input.From.Name].estado = 102;
+                            return new PlainText { Text = banco.respostas[102] };
+                        }
+                        if (contains("Aprender receitas", mensagemUsuario))
+                        {
+                            // Inserir o estado para a primeira mensagem para as receitas
+                            return new PlainText { Text = "Estamos trabalhando com novas receitas e as disponibilizaremos em breve!" };
+                        }
+                        if (contains("Delivery", mensagemUsuario))
+                        {
+                            // Inserir o estado para a primeira mensagem para delivery
+                            return new PlainText { Text = "Em breve, um novo serviço para você." };
+                        }
+                        Document opcoes = menuInicial();
+                        return opcoes;*/
+                    case 1015:
                         if (contains("Restaurantes/Lojas", mensagemUsuario))
                         {
                             banco.usuarios[input.From.Name].estado = 102;
@@ -182,15 +212,14 @@ namespace Hackathon1
                         if (contains("Aprender receitas", mensagemUsuario))
                         {
                             // Inserir o estado para a primeira mensagem para as receitas
-                            return null;
+                            return new PlainText { Text = "Estamos trabalhando com novas receitas e as disponibilizaremos em breve!" };
                         }
                         if (contains("Delivery", mensagemUsuario))
                         {
                             // Inserir o estado para a primeira mensagem para delivery
-                            return null;
+                            return new PlainText { Text = "Em breve, um novo serviço para você." };
                         }
-                        Document opcoes = menuInicial();
-                        return opcoes;
+                        return new PlainText { Text = "Me desculpe, mas não consegui entender" };
                     case 102:
                         // Em qual cidade você se encontra?
                         banco.usuarios[input.From.Name].cidade = mensagemUsuario;
@@ -249,7 +278,7 @@ namespace Hackathon1
                                 banco.usuarios[input.From.Name].restaurante = restaurante;
                                 return new PlainText { Text = restaurante.cardapioToString() + "\n" + banco.respostas[106] };
                             }
-                            return new PlainText { Text = "default" };
+                            return new PlainText { Text = "Me desculpe, mas não consegui entender" };
                         }
                     case 106:
                         // Gostaria do endereço do estabelecimento?
@@ -268,7 +297,7 @@ namespace Hackathon1
                             // Gostaria de visualizar mais algum cardápio? Se sim, qual?
                             return new PlainText { Text = banco.respostas[110] };
                         }
-                        return new PlainText { Text = "default" };
+                        return new PlainText { Text = "Me desculpe, mas não consegui entender" };
                     case 108:
                         // Posso te ajudar com mais alguma coisa?
                         if (contains("Sim", mensagemUsuario))
@@ -283,9 +312,9 @@ namespace Hackathon1
                             banco.usuarios[input.From.Name].estado = 0;
                             return new PlainText { Text = banco.respostas[111] };
                         }
-                        return new PlainText { Text = "default" };
+                        return new PlainText { Text = "Me desculpe, mas não consegui entender" };
                     default:
-                        return new PlainText { Text = "default" };
+                        return new PlainText { Text = "Me desculpe, mas não consegui entender" };
 
                 }
                 

@@ -25,7 +25,7 @@ namespace Hackathon1
             {108, "Posso te ajudar com mais alguma coisa?" },
             {109, "Em qual cidade você mora?" },
             {110, "Gostaria de visualizar mais algum cardápio? Se sim, qual?" },
-            {111, "Tudo bem :)" },
+            {111, "Nos vemos em breve!" },
             {112, "Tem alguma restrição ao consumo do leite, açúcar ou glúten?" }
         };
 
@@ -67,11 +67,6 @@ namespace Hackathon1
 
             return lst;
         }
-        public void adicionarReceita(Receita receita)
-        {
-            receitas.Add(receita);
-        }
-
         public void adicionarReceita(Receita receita)
         {
             receitas.Add(receita);
