@@ -33,16 +33,15 @@ namespace Hackathon1
     }
     public enum Necessidade
     {
-        nenhum = 0,
         receita,
         restaurante,
         delivery
     }
     public enum Restricao
     {
-        nenhum = 0,
         lactose,
         gluten,
-        acucar
+        acucar,
+        nenhum
     }
 }
