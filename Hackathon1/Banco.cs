@@ -20,7 +20,8 @@ namespace Hackathon1
             {5, "Não encontrei nenhum restaurante com esse prato :( Algum outro prato específico?" },
             {6, "Gostaria do endereço do estabelecimento?" },
             {7, "Deseja visualizar outro estabelecimento?" },
-            {8, "Posso te ajudar com mais alguma coisa?" }
+            {8, "Posso te ajudar com mais alguma coisa?" },
+            {9, "Em qual cidade você mora?" }
         };
     }
 }
