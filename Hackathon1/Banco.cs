@@ -8,7 +8,7 @@ namespace Hackathon1
 {
     class Banco
     {
-        //public Dictionary<string,Usuario> usuarios = new Dictionary<string, Usuario>();
+        public Dictionary<string,Usuario> usuarios = new Dictionary<string, Usuario>();
         public List<Restaurante> restaurantes = new List<Restaurante>();
         //public List<string> usuarioSaudacao = new List<string>();
 
@@ -23,7 +23,8 @@ namespace Hackathon1
             {107, "Deseja visualizar outro estabelecimento?" },
             {108, "Posso te ajudar com mais alguma coisa?" },
             {109, "Em qual cidade você mora?" },
-            {110, "Gostaria de visualizar mais algum cardápio? Se sim, qual?" }
+            {110, "Gostaria de visualizar mais algum cardápio? Se sim, qual?" },
+            {111, "Tudo bem :)" }
         };
 
         public void adicionarRestaurante(Restaurante restaurante)

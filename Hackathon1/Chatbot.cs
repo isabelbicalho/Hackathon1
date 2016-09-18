@@ -128,11 +128,13 @@ namespace Hackathon1
                         banco.usuarios[input.From.Name].estado = 105;
                         return new PlainText { Text = banco.respostas[105] };
                     case 104:
+                    case 110:
                         // Encontrei ótimos restaurantes para você! Qual deles gostaria de ver o cardápio?
                         if (mensagemUsuario.Contains("Não"))
                         {
-                            // Retornar uma mensagem e mudar de estado.
-                            return null;
+                            // Perguntar se pode ajudar com mais algo
+                            banco.usuarios[input.From.Name].estado = 108;
+                            return new PlainText { Text = banco.respostas[108] };
                         }
                         else
                         {
@@ -153,9 +155,27 @@ namespace Hackathon1
                         }
                         if (mensagemUsuario.Contains("Não"))
                         {
-
+                            // Perguntar se quer ver outro estabelecimento
+                            banco.usuarios[input.From.Name].estado = 110;
+                            // Gostaria de visualizar mais algum cardápio? Se sim, qual?
+                            return new PlainText { Text = banco.respostas[110] };
                         }
-                        return null;
+                        return new PlainText { Text = "default" };
+                    case 108:
+                        // Posso te ajudar com mais alguma coisa?
+                        if (mensagemUsuario.Contains("Sim"))
+                        {
+                            // Voltar para o início
+                            banco.usuarios[input.From.Name].estado = 101;
+                            return new PlainText { Text = banco.respostas[101] };
+                        }
+                        if (mensagemUsuario.Contains("Não"))
+                        {
+                            // Tudo bem :)
+                            banco.usuarios[input.From.Name].estado = 0;
+                            return new PlainText { Text = banco.respostas[111] };
+                        }
+                        return new PlainText { Text = "default" };
                     default:
                         return new PlainText { Text = "default" };
 
