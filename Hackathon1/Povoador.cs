@@ -73,11 +73,30 @@ namespace Hackathon1
                 false, false, false));
             banco.adicionarRestaurante(restaurante5);
 
-            Receita receita1 = new Receita("Pate de frango", 
+            Receita receita1 = new Receita ("Pate de frango", 
                 new List<string>(new string[] {"frango desfiado", "azeite", "cebola", "alho", "cenoura ralada", "queijo cottage", "iogurte desnatado", "cheiro-verde"}), 
-                "https://www.natue.com.br/natuelife/receita-de-pate-de-frango.html");
+                "https://www.natue.com.br/natuelife/receita-de-pate-de-frango.html", false, true, false);
             banco.adicionarReceita(receita1);
 
+            Receita receita2 = new Hackathon1.Receita ("Salmao ao molho de laranja",
+                new List<string>(new string[] {"oleo de canola", "alho", "salmao", "gengibre ralado", "suco de laranja", "amido de milho", "salsinha"}),
+                "https://www.natue.com.br/natuelife/receita-salmao-ao-molho-de-laranja.html", false, false, false);
+            banco.adicionarReceita(receita2);
+
+            Receita receita3 = new Receita ("Torta de Morango",
+                new List<string>(new string[] { "amaranto", "amendoas", "oleo de coco", "agave", "morango", "sal marinho" }),
+                "https://www.natue.com.br/natuelife/receita-de-torta-de-morango.html", false, false, false);
+            banco.adicionarReceita(receita3);
+
+            Receita receita4 = new Receita ("Creme de brocolis",
+                new List<string>(new string[] {"brocolis", "batata doce", "semente de linhaca dourada", "curcuma", "salsinha picada", "sal marinho", "noz moscada"}),
+                "https://www.natue.com.br/natuelife/creme-de-brocolis-e-batata-doce.html", false, false, false);
+            banco.adicionarReceita(receita4);
+
+            Receita receita5 = new Receita("Canja de galinha",
+                new List<string>(new string[] {"peito de frango", "cenoura", "batata inglesa", "arroz integral", "gengibre", "curcuma"}),
+                "https://www.natue.com.br/natuelife/receita-de-canja-de-galinha.html", false, false, false);
+            banco.adicionarReceita(receita5);
 
         }
     }

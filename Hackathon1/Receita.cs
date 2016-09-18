@@ -8,15 +8,21 @@ namespace Hackathon1
 {
     class Receita
     {
-        private string nome;
-        private List<string> ingredientes = new List<string>();
-        private string link;
+        public string nome;
+        public List<string> ingredientes = new List<string>();
+        public string link;
+        public bool gluten;
+        public bool leite;
+        public bool acucar;
 
-        public Receita(string nome, List<string> ingredientes, string link)
+        public Receita(string nome, List<string> ingredientes, string link, bool gluten, bool leite, bool acucar)
         {
             this.nome = nome;
             this.ingredientes = ingredientes;
             this.link = link;
+            this.gluten = gluten;
+            this.leite = leite;
+            this.acucar = acucar;
         }
     }
 }
