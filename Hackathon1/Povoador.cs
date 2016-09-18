@@ -8,7 +8,7 @@ namespace Hackathon1
 {
     class Povoador
     {
-        public void povoar (Banco banco)
+        public static void povoar (Banco banco)
         {
             Prato prato1 = new Prato("Escondidinho de batata doce",
                 "R$ 15,00", 

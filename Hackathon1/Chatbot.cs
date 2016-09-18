@@ -10,47 +10,13 @@ namespace Hackathon1
 {
     class Chatbot
     {
-        Banco banco;
+        public Banco banco;
         string[] saudacoes = { "Olá!" };
         string[] despedidas = { "Obrigado pela preferência!" };
 
         public Chatbot(Banco banco)
         {
             this.banco = banco;
-        }
-
-        public string isSaudacao(string input)
-        {
-            List<string> usuarioSaudacao = banco.usuarioSaudacao;
-            if (usuarioSaudacao.Contains(input))
-            {
-                var document = new Select
-                {
-                    Text = "O que você deseja?",
-                    Options = new[]
-                    {
-                        new SelectOption
-                        {
-                            Order = 1,
-                            Text = "Buscar restaurantes de comida saudável",
-                            Value = new PlainText { Text = "1" }
-                        },
-                        new SelectOption
-                        {
-                            Order = 2,
-                            Text = "Buscar fornecedores de comida saudável",
-                            Value = new PlainText { Text = "2" }
-                        },
-                        new SelectOption
-                        {
-                            Order = 3,
-                            Text = "Sugestões de receitas",
-                            Value = new PlainText { Text = "3" }
-                        }
-                    }
-                };
-            }
-            return null;
         }
 
         public Document menuInicial()
@@ -94,28 +60,36 @@ namespace Hackathon1
         }
 
         public DocumentCollection agregarItem(DocumentCollection resposta, Document item)
-        { 
-            Document[] newItems = new Document[resposta.Items.Length + 1];
-            resposta.Items.CopyTo(newItems, 0);
-            newItems[newItems.Length - 1] = item;
-            resposta.Items = newItems;
+        {
+            List<Document> newItems = new List<Document>();
+            Document[] temp = resposta.Items;
+            if (temp != null)
+            {
+                resposta.Items = newItems.ToArray();
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    newItems.Add((Document)temp[i]);
+                }
+            }
+            newItems.Add((Document)item);
+            resposta.Items = newItems.ToArray();
             return resposta;
         }
 
-        public DocumentCollection gerarResposta(Message input)
+        public Document gerarResposta(Message input)
         {
-            DocumentCollection resposta = new DocumentCollection();
             if (!banco.usuarios.ContainsKey(input.From.Name))
             {
                 banco.usuarios[input.From.Name] = new Usuario();
                 banco.usuarios[input.From.Name].estado = 1;
                 Document doc = new PlainText { Text = "Qual o seu nome?" };
-                resposta = agregarItem(resposta, doc);
+                //resposta = agregarItem(resposta, doc);
+                return doc;
             }
             else if (input.Content.ToString().Contains("Sugestão de restaurantes"))
             {
                 banco.usuarios[input.From.Name].estado = 3;
-                resposta = agregarItem(resposta, new PlainText { Text = banco.respostas[3] });
+                return new PlainText { Text = banco.respostas[3] };
             }
             else
             {
@@ -123,15 +97,14 @@ namespace Hackathon1
                 {
                     case 1:
                         Document opcoes = menuInicial();
-                        resposta = agregarItem(resposta, opcoes);
-                        break;
+                        return opcoes;
                     case 3:
 
                         break;
                 }
                 
             }
-            return resposta;
+            return null;
         }
     }
 }

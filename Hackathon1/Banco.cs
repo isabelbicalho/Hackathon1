@@ -10,7 +10,7 @@ namespace Hackathon1
     {
         public Dictionary<string,Usuario> usuarios = new Dictionary<string, Usuario>();
         public List<Restaurante> restaurantes = new List<Restaurante>();
-        public List<string> usuarioSaudacao = new List<string>();
+        //public List<string> usuarioSaudacao = new List<string>();
         public Dictionary<int, String> respostas = new Dictionary<int, string>()
         {
             {1, "Como posso te ajudar?"},
