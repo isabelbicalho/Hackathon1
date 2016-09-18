@@ -72,6 +72,13 @@ namespace Hackathon1
                 new List<string>(new string[] { "chocolate 70% cacau", "creme de soja", "alfarroba em pó", "ovo", "cereja" }),
                 false, false, false));
             banco.adicionarRestaurante(restaurante5);
+
+            Receita receita1 = new Receita("Pate de frango", 
+                new List<string>(new string[] {"frango desfiado", "azeite", "cebola", "alho", "cenoura ralada", "queijo cottage", "iogurte desnatado", "cheiro-verde"}), 
+                "https://www.natue.com.br/natuelife/receita-de-pate-de-frango.html");
+            banco.adicionarReceita(receita1);
+
+
         }
     }
 }

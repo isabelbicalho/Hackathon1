@@ -10,7 +10,7 @@ namespace Hackathon1
     {
         public Dictionary<string,Usuario> usuarios = new Dictionary<string, Usuario>();
         public List<Restaurante> restaurantes = new List<Restaurante>();
-        public List<Alimento> alimentos = new List<Alimento>();
+        public List<Receita> receitas = new List<Receita>();
         //public List<string> usuarioSaudacao = new List<string>();
 
         public Dictionary<int, String> respostas = new Dictionary<int, string>()
@@ -32,6 +32,11 @@ namespace Hackathon1
         public void adicionarRestaurante(Restaurante restaurante)
         {
             restaurantes.Add(restaurante);
+        }
+
+        public void adicionarReceita(Receita receita)
+        {
+            receitas.Add(receita);
         }
 
     }
