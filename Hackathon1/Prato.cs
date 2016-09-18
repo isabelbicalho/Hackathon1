@@ -37,13 +37,14 @@ namespace Hackathon1
             this.carne = carne;
         }
 
-        List<string> buscarIngrediente(string texto)
+        public List<string> buscarIngrediente(string texto)
         {
             List<string> lst = new List<string>();
+            texto = texto.ToUpper();
 
             foreach (string i in lst)
             {
-                if (i.Contains(texto))
+                if (i.ToUpper().IndexOf(texto) >= 0)
                 {
                     lst.Add(i);
                 }

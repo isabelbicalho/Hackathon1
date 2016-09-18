@@ -36,7 +36,7 @@ namespace Hackathon1
 
             foreach(Restaurante r in restaurantes)
             {
-                if ((String.IsNullOrEmpty(nome) || r.nome.Contains(nome)) && (String.IsNullOrEmpty(endereco) || r.endereco.Contains(endereco)) &&
+                if ((String.IsNullOrEmpty(nome) || r.nome.IndexOf(nome)>=0) && (String.IsNullOrEmpty(endereco) || r.endereco.IndexOf(endereco) >= 0) &&
                     r.buscarCardapio(pratoingrediente, restricaoGluten, restricaoLeite, restricaoAcucar).Count()>0)
                 {
                     lst.Add(r);
@@ -50,6 +50,7 @@ namespace Hackathon1
         {
             List<Prato> lst = new List<Prato>();
             List<Prato> aux = new List<Prato>();
+            pratoingrediente = pratoingrediente.ToUpper();
 
             foreach (Restaurante r in restaurantes)
             {

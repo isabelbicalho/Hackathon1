@@ -41,11 +41,12 @@ namespace Hackathon1
         public List<Prato> buscarCardapio(string pratoingrediente, bool restricaoGluten, bool restricaoLeite, bool restricaoAcucar)
         {
             List<Prato> lst = new List<Prato>();
+            pratoingrediente = pratoingrediente.ToUpper();
 
             foreach (Prato p in cardapio)
             {
                 if ((!restricaoGluten || p.gluten) && (!restricaoLeite || p.leite) && (!restricaoAcucar || p.acucar) &&
-                    (string.IsNullOrEmpty(pratoingrediente) || p.nome.Contains(pratoingrediente) || p.ingredientes.Contains(pratoingrediente)))
+                    (string.IsNullOrEmpty(pratoingrediente) || p.nome.IndexOf(pratoingrediente) >= 0 || p.buscarIngrediente(pratoingrediente).Count() > 0))
                 {
                     lst.Add(p);
                 }
