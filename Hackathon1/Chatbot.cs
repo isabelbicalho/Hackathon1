@@ -61,6 +61,11 @@ namespace Hackathon1
                 option.Value = new PlainText { Text = restaurantes.ElementAt<Restaurante>(i).nome };
                 options.Add((SelectOption)option);
             }
+            SelectOption optNenhum = new SelectOption();
+            optNenhum.Order = options.Count;
+            optNenhum.Text = "Nenhum";
+            optNenhum.Value = new PlainText { Text = "Nenhum" };
+            options.Add((SelectOption)optNenhum);
             Document select = new Select
             {
                 Text = banco.respostas[104],
@@ -135,7 +140,7 @@ namespace Hackathon1
                         }
                     case 101:
                         // Como posso te ajudar?
-                        if (contains("Sugestão de restaurantes", mensagemUsuario))
+                        if (contains("Restaurantes/Lojas", mensagemUsuario))
                         {
                             banco.usuarios[input.From.Name].estado = 103;
                             return new PlainText { Text = banco.respostas[103] };
@@ -173,7 +178,7 @@ namespace Hackathon1
                         }
                         List<Restaurante> restaurantes = buscarCardapio(mensagemUsuario, input.From.Name);
                         // Se encontrou
-                        if (restaurantes.Count > 0)
+                        if (restaurantes.Count > 1)
                         {
                             banco.usuarios[input.From.Name].estado = 104;
                             return selectRestaurantes(restaurantes);
@@ -184,7 +189,7 @@ namespace Hackathon1
                     case 104:
                     case 110:
                         // Encontrei ótimos restaurantes para você! Qual deles gostaria de ver o cardápio?
-                        if (contains("Não", mensagemUsuario))
+                        if (contains("Nenhum", mensagemUsuario))
                         {
                             // Perguntar se pode ajudar com mais algo
                             banco.usuarios[input.From.Name].estado = 108;
@@ -213,8 +218,9 @@ namespace Hackathon1
                         {
                             // Retornar mensagem de texto com o endereço do estabelecimento.
                             // Perguntar se pode ajudar com mais alguma coisa
+                            banco.usuarios[input.From.Name].estado = 108;
                             Restaurante restaurante = banco.usuarios[input.From.Name].restaurante;
-                            return new PlainText { Text = "Segue o telefone do estabelecimento: \n" + restaurante.nome + ": " + restaurante.telefone };
+                            return new PlainText { Text = "Segue o endereço do estabelecimento: \n" + restaurante.nome + ": " + restaurante.endereco + "\n"+banco.respostas[108] };
                         }
                         if (contains("Não", mensagemUsuario))
                         {
