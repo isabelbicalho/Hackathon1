@@ -50,19 +50,20 @@ namespace Hackathon1
             cardapio.Add(prato);
         }
 
-        public List<Prato> buscarCardapio(string mensagem)
+        public List<Prato> buscarCardapio(string pratoingrediente)
         {
-            return buscarCardapio(mensagem, false, false, false);
+            return buscarCardapio(pratoingrediente, false, false, false);
         }
 
-        public List<Prato> buscarCardapio(string texto, bool restricaoGluten, bool restricaoLeite, bool restricaoAcucar)
+        public List<Prato> buscarCardapio(string pratoingrediente, bool restricaoGluten, bool restricaoLeite, bool restricaoAcucar)
         {
             List<Prato> lst = new List<Prato>();
+            pratoingrediente = pratoingrediente.ToUpper();
 
             foreach (Prato p in cardapio)
             {
                 if ((!restricaoGluten || p.gluten) && (!restricaoLeite || p.leite) && (!restricaoAcucar || p.acucar) &&
-                    (p.nome.Contains(texto) || p.ingredientes.Contains(texto)))
+                    (string.IsNullOrEmpty(pratoingrediente) || p.nome.IndexOf(pratoingrediente) >= 0 || p.buscarIngrediente(pratoingrediente).Count() > 0))
                 {
                     lst.Add(p);
                 }
