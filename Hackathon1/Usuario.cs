@@ -15,6 +15,7 @@ namespace Hackathon1
         public bool restricaoGluten = false;
         public bool restricaoAcucar = false;
         //pedido atual
+        public Restaurante restaurante;
         public string endereco;
         public string cidade;
         public string bairro;

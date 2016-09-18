@@ -19,6 +19,23 @@ namespace Hackathon1
             this.banco = banco;
         }
 
+        public bool contains (string s1, string s2)
+        {
+            s1 = s1.ToLowerInvariant();
+            s2 = s2.ToLowerInvariant();
+            return s2.Contains(s1);
+        }
+
+        public Restaurante buscarRestaurante (string texto)
+        {
+            for (int i = 0; i < banco.restaurantes.Count; i++)
+            {
+                if (contains(banco.restaurantes.ElementAt<Restaurante>(i).nome, texto))
+                    return banco.restaurantes.ElementAt<Restaurante>(i);
+            }
+            return null;
+        }
+
         public List<Restaurante> buscarCardapio (string texto, string numUsuario)
         {
             Usuario usuario = banco.usuarios[numUsuario];
@@ -105,7 +122,7 @@ namespace Hackathon1
                         banco.usuarios[input.From.Name].estado = 113;
                         return new PlainText { Text = banco.respostas[112] };
                     case 113:
-                        if (mensagemUsuario.Contains("Não"))
+                        if (contains("Não",mensagemUsuario))
                         {
                             banco.usuarios[input.From.Name].estado = 101;
                             goto case 101;
@@ -118,17 +135,17 @@ namespace Hackathon1
                         }
                     case 101:
                         // Como posso te ajudar?
-                        if (mensagemUsuario.Contains("Sugestão de restaurantes"))
+                        if (contains("Sugestão de restaurantes", mensagemUsuario))
                         {
                             banco.usuarios[input.From.Name].estado = 103;
                             return new PlainText { Text = banco.respostas[103] };
                         }
-                        if (mensagemUsuario.Contains("Aprender receitas"))
+                        if (contains("Aprender receitas", mensagemUsuario))
                         {
                             // Inserir o estado para a primeira mensagem para as receitas
                             return null;
                         }
-                        if (mensagemUsuario.Contains("Delivery"))
+                        if (contains("Delivery", mensagemUsuario))
                         {
                             // Inserir o estado para a primeira mensagem para delivery
                             return null;
@@ -140,13 +157,19 @@ namespace Hackathon1
                         // Algum prato específico? (salmão, frango, caldo, sopa, ...)
                         // Chamar a função para pesquisar os pratos aqui
                         
-                        if (mensagemUsuario.Contains("Não"))
+                        if (contains("Não", mensagemUsuario))
                         {
                             // pesquisar apenas pelas restrições
                         }
                         else
                         {
                             // pesquisar por restrições e preferências
+                            if (contains("leite", mensagemUsuario))
+                                banco.usuarios[input.From.Name].restricaoLeite = true;
+                            if (contains("glúten", mensagemUsuario))
+                                banco.usuarios[input.From.Name].restricaoGluten = true;
+                            if (contains("açúcar", mensagemUsuario))
+                                banco.usuarios[input.From.Name].restricaoAcucar = true;
                         }
                         List<Restaurante> restaurantes = buscarCardapio(mensagemUsuario, input.From.Name);
                         // Se encontrou
@@ -161,7 +184,7 @@ namespace Hackathon1
                     case 104:
                     case 110:
                         // Encontrei ótimos restaurantes para você! Qual deles gostaria de ver o cardápio?
-                        if (mensagemUsuario.Contains("Não"))
+                        if (contains("Não", mensagemUsuario))
                         {
                             // Perguntar se pode ajudar com mais algo
                             banco.usuarios[input.From.Name].estado = 108;
@@ -173,18 +196,27 @@ namespace Hackathon1
                             // e retornar o cardápio do restaurante que a pessoa escolheu.
                             // Perguntar se o cliente quer o endereço do estabelecimento no
                             // próprio campo text do Select (estado 106)
-                            banco.usuarios[input.From.Name].estado = 106;
-                            return null;
+                            
+                            // Obter fornecedor através da mensagem de texto
+                            Restaurante restaurante = buscarRestaurante(mensagemUsuario);
+                            if (restaurante != null)
+                            {
+                                banco.usuarios[input.From.Name].estado = 106;
+                                banco.usuarios[input.From.Name].restaurante = restaurante;
+                                return new PlainText { Text = restaurante.cardapioToString() + "\n" + banco.respostas[106] };
+                            }
+                            return new PlainText { Text = "default" };
                         }
                     case 106:
                         // Gostaria do endereço do estabelecimento?
-                        if (mensagemUsuario.Contains("Sim"))
+                        if (contains("Sim", mensagemUsuario))
                         {
                             // Retornar mensagem de texto com o endereço do estabelecimento.
                             // Perguntar se pode ajudar com mais alguma coisa
-                            return null;
+                            Restaurante restaurante = banco.usuarios[input.From.Name].restaurante;
+                            return new PlainText { Text = "Segue o telefone do estabelecimento: \n" + restaurante.nome + ": " + restaurante.telefone };
                         }
-                        if (mensagemUsuario.Contains("Não"))
+                        if (contains("Não", mensagemUsuario))
                         {
                             // Perguntar se quer ver outro estabelecimento
                             banco.usuarios[input.From.Name].estado = 110;
@@ -194,13 +226,13 @@ namespace Hackathon1
                         return new PlainText { Text = "default" };
                     case 108:
                         // Posso te ajudar com mais alguma coisa?
-                        if (mensagemUsuario.Contains("Sim"))
+                        if (contains("Sim", mensagemUsuario))
                         {
                             // Voltar para o início
                             banco.usuarios[input.From.Name].estado = 101;
                             return new PlainText { Text = banco.respostas[101] };
                         }
-                        if (mensagemUsuario.Contains("Não"))
+                        if (contains("Não", mensagemUsuario))
                         {
                             // Tudo bem :)
                             banco.usuarios[input.From.Name].estado = 0;
