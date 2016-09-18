@@ -83,7 +83,7 @@ namespace Hackathon1
             if (!banco.usuarios.ContainsKey(input.From.Name))
             {
                 banco.usuarios[input.From.Name] = new Usuario();
-                banco.usuarios[input.From.Name].estado = 1;
+                banco.usuarios[input.From.Name].estado = 101;
                 Document doc = new PlainText { Text = "Qual o seu nome?" };
                 return doc;
             }
@@ -91,11 +91,12 @@ namespace Hackathon1
             {
                 switch (banco.usuarios[input.From.Name].estado)
                 {
-                    case 1:
+                    case 101:
+                        // Como posso te ajudar?
                         if (mensagemUsuario.Contains("Sugestão de restaurantes"))
                         {
-                            banco.usuarios[input.From.Name].estado = 3;
-                            return new PlainText { Text = banco.respostas[3] };
+                            banco.usuarios[input.From.Name].estado = 103;
+                            return new PlainText { Text = banco.respostas[103] };
                         }
                         if (mensagemUsuario.Contains("Aprender receitas"))
                         {
@@ -109,14 +110,52 @@ namespace Hackathon1
                         }
                         Document opcoes = menuInicial();
                         return opcoes;
-                    case 3:
+                    case 103:
+                        // Algum prato específico? (salmão, frango, caldo, sopa, ...)
                         // Chamar a função para pesquisar os pratos aqui
+                        if (mensagemUsuario.Contains("Não"))
+                        {
+                            // pesquisar apenas pelas restrições
+                        }
+                        else
+                        {
+                            // pesquisar por restrições e preferências
+                        }
                         // Se encontrou
-                        banco.usuarios[input.From.Name].estado = 4;
+                        banco.usuarios[input.From.Name].estado = 104;
                         return null; // Retorna Select dos restaurantes
                         // Se nao encontrou
-                        banco.usuarios[input.From.Name].estado = 5;
-                        return new PlainText { Text = banco.respostas[5] };
+                        banco.usuarios[input.From.Name].estado = 105;
+                        return new PlainText { Text = banco.respostas[105] };
+                    case 104:
+                        // Encontrei ótimos restaurantes para você! Qual deles gostaria de ver o cardápio?
+                        if (mensagemUsuario.Contains("Não"))
+                        {
+                            // Retornar uma mensagem e mudar de estado.
+                            return null;
+                        }
+                        else
+                        {
+                            // Pesquisar a mensagem de input (restaurante) nos fornecedores 
+                            // e retornar o cardápio.
+                            // Perguntar se o cliente quer o endereço do estabelecimento no
+                            // próprio campo text do Select (estado 106)
+                            banco.usuarios[input.From.Name].estado = 106;
+                            return null;
+                        }
+                    case 106:
+                        // Gostaria do endereço do estabelecimento?
+                        if (mensagemUsuario.Contains("Sim"))
+                        {
+                            // Retornar mensagem de texto com o endereço do estabelecimento.
+                            // Perguntar se pode ajudar com mais alguma coisa
+                            return null;
+                        }
+                        if (mensagemUsuario.Contains("Não"))
+                        {
+
+                        }
+                        return null;
                     default:
                         return new PlainText { Text = "default" };
 
