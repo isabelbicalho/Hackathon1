@@ -28,7 +28,7 @@ namespace Hackathon1
             this.cardapio = cardapio;
         }
 
-        public string cardapioToString ()
+        public string cardapioToString()
         {
             string s = nome + "\n";
             string nc = "";
@@ -40,7 +40,7 @@ namespace Hackathon1
                 if (!prato.gluten) nc += "glúten ";
                 if (!prato.acucar) nc += "açúcar";
                 if (nc.Length > 0) s += "Não contém: " + nc;
-                s += "\nPreço: " + prato.preco+"\n";
+                s += "\nPreço: " + prato.preco + "\n";
             }
             return s;
         }

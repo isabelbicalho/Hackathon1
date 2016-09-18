@@ -21,9 +21,7 @@ namespace Hackathon1
 
         public bool contains (string s1, string s2)
         {
-            s1 = s1.ToLowerInvariant();
-            s2 = s2.ToLowerInvariant();
-            return s2.Contains(s1);
+            return s2.ToUpper().IndexOf(s1.ToUpper()) >= 0;
         }
 
         public Restaurante buscarRestaurante (string texto)
@@ -36,18 +34,19 @@ namespace Hackathon1
             return null;
         }
 
-        public List<Restaurante> buscarCardapio (string texto, string numUsuario)
+        public List<Restaurante> buscarRestaurantesCardapio (string texto, string numUsuario)
         {
             Usuario usuario = banco.usuarios[numUsuario];
-            List<Restaurante> restaurantes = new List<Restaurante>();
+            /*List<Restaurante> restaurantes = new List<Restaurante>();
+            restaurantes = banco.buscarRestaurante("", usuario.cidade, texto, usuario.restricaoGluten, usuario.restricaoLeite, usuario.restricaoAcucar);
             for (int i = 0; i < banco.restaurantes.Count; i++)
             {
                 List<Prato> cardapio = banco.restaurantes[i].buscarCardapio(texto, usuario.restricaoGluten, 
                     usuario.restricaoLeite, usuario.restricaoAcucar);
                 if (cardapio.Count > 0)
                     restaurantes.Add((Restaurante)banco.restaurantes[i]);
-            }
-            return restaurantes;
+            }*/
+            return banco.buscarRestaurante("", usuario.cidade, texto, usuario.restricaoGluten, usuario.restricaoLeite, usuario.restricaoAcucar);
         }
 
         public Document selectRestaurantes (List<Restaurante> restaurantes)
@@ -123,27 +122,58 @@ namespace Hackathon1
                     case 112:
                         // obter nome do usuario
                         banco.usuarios[input.From.Name].nome = mensagemUsuario;
-                        // Você restringe ao consumo do leite, açúcar ou glúten?
+                        // Tem alguma restrição ao consumo do leite, do açúcar ou do glúten?
                         banco.usuarios[input.From.Name].estado = 113;
                         return new PlainText { Text = banco.respostas[112] };
                     case 113:
-                        if (contains("Não",mensagemUsuario))
+                        if (contains("Não", mensagemUsuario) || contains("Nao", mensagemUsuario))
                         {
                             banco.usuarios[input.From.Name].estado = 101;
                             goto case 101;
+                        }
+                        bool ehIntolerante = false;
+                        if (contains("leite", mensagemUsuario) || contains("lactose", mensagemUsuario))
+                        {
+                            banco.usuarios[input.From.Name].restricaoLeite = true;
+                            ehIntolerante = true;
+                        }
+                        if (contains("açúcar", mensagemUsuario) || contains("açucar", mensagemUsuario) ||
+                            contains("acúcar", mensagemUsuario) || contains("acucar", mensagemUsuario))
+                        {
+                            banco.usuarios[input.From.Name].restricaoAcucar = true;
+                            ehIntolerante = true;
+                        }
+                        if (contains("glúten", mensagemUsuario) || contains("gluten", mensagemUsuario))
+                        {
+                            banco.usuarios[input.From.Name].restricaoGluten = true;
+                            ehIntolerante = true;
+                        }
+                        if (ehIntolerante)
+                            goto case 101;
+                        else if (contains("Sim", mensagemUsuario))
+                        {
+                            banco.usuarios[input.From.Name].estado = 114;
+                            return new PlainText { Text = "Quais?" };
                         }
                         else
                         {
-                            // atualizar usuario
-                            banco.usuarios[input.From.Name].estado = 101;
-                            goto case 101;
+                            return new PlainText { Text = "default" };
                         }
+                    case 114:
+                        if (contains("leite", mensagemUsuario) || contains("lactose", mensagemUsuario))
+                            banco.usuarios[input.From.Name].restricaoLeite = true;
+                        if (contains("açúcar", mensagemUsuario) || contains("açucar", mensagemUsuario) ||
+                            contains("acúcar", mensagemUsuario) || contains("acucar", mensagemUsuario))
+                            banco.usuarios[input.From.Name].restricaoAcucar = true;
+                        if (contains("glúten", mensagemUsuario) || contains("gluten", mensagemUsuario))
+                            banco.usuarios[input.From.Name].restricaoGluten = true;
+                        goto case 101;
                     case 101:
                         // Como posso te ajudar?
                         if (contains("Restaurantes/Lojas", mensagemUsuario))
                         {
-                            banco.usuarios[input.From.Name].estado = 103;
-                            return new PlainText { Text = banco.respostas[103] };
+                            banco.usuarios[input.From.Name].estado = 102;
+                            return new PlainText { Text = banco.respostas[102] };
                         }
                         if (contains("Aprender receitas", mensagemUsuario))
                         {
@@ -157,26 +187,31 @@ namespace Hackathon1
                         }
                         Document opcoes = menuInicial();
                         return opcoes;
+                    case 102:
+                        // Em qual cidade você se encontra?
+                        banco.usuarios[input.From.Name].cidade = mensagemUsuario;
+                        banco.usuarios[input.From.Name].estado = 103;
+                        return new PlainText { Text = banco.respostas[103] };
                     case 103:
                     case 105:
                         // Algum prato específico? (salmão, frango, caldo, sopa, ...)
                         // Chamar a função para pesquisar os pratos aqui
-                        
-                        if (contains("Não", mensagemUsuario))
+
+                        if (contains("Não", mensagemUsuario) || contains("Nao", mensagemUsuario))
                         {
                             // pesquisar apenas pelas restrições
                         }
                         else
                         {
                             // pesquisar por restrições e preferências
-                            if (contains("leite", mensagemUsuario))
+                            /*if (contains("leite", mensagemUsuario))
                                 banco.usuarios[input.From.Name].restricaoLeite = true;
                             if (contains("glúten", mensagemUsuario))
                                 banco.usuarios[input.From.Name].restricaoGluten = true;
                             if (contains("açúcar", mensagemUsuario))
-                                banco.usuarios[input.From.Name].restricaoAcucar = true;
+                                banco.usuarios[input.From.Name].restricaoAcucar = true;*/
                         }
-                        List<Restaurante> restaurantes = buscarCardapio(mensagemUsuario, input.From.Name);
+                        List<Restaurante> restaurantes = buscarRestaurantesCardapio(mensagemUsuario, input.From.Name);
                         // Se encontrou
                         if (restaurantes.Count > 1)
                         {
@@ -222,7 +257,7 @@ namespace Hackathon1
                             Restaurante restaurante = banco.usuarios[input.From.Name].restaurante;
                             return new PlainText { Text = "Segue o endereço do estabelecimento: \n" + restaurante.nome + ": " + restaurante.endereco + "\n"+banco.respostas[108] };
                         }
-                        if (contains("Não", mensagemUsuario))
+                        if (contains("Não", mensagemUsuario) || contains("Nao", mensagemUsuario))
                         {
                             // Perguntar se quer ver outro estabelecimento
                             banco.usuarios[input.From.Name].estado = 110;
@@ -238,7 +273,7 @@ namespace Hackathon1
                             banco.usuarios[input.From.Name].estado = 101;
                             return new PlainText { Text = banco.respostas[101] };
                         }
-                        if (contains("Não", mensagemUsuario))
+                        if (contains("Não", mensagemUsuario) || contains("Nao", mensagemUsuario))
                         {
                             // Tudo bem :)
                             banco.usuarios[input.From.Name].estado = 0;
