@@ -36,5 +36,20 @@ namespace Hackathon1
             this.acucar = acucar;
             this.carne = carne;
         }
+
+        List<string> buscarIngrediente(string texto)
+        {
+            List<string> lst = new List<string>();
+
+            foreach (string i in lst)
+            {
+                if (i.Contains(texto))
+                {
+                    lst.Add(i);
+                }
+            }
+
+            return lst;
+        }
     }
 }
