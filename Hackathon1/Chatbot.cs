@@ -19,6 +19,40 @@ namespace Hackathon1
             this.banco = banco;
         }
 
+        public List<Restaurante> buscarCardapio (string texto, string numUsuario)
+        {
+            Usuario usuario = banco.usuarios[numUsuario];
+            List<Restaurante> restaurantes = new List<Restaurante>();
+            for (int i = 0; i < banco.restaurantes.Count; i++)
+            {
+                List<Prato> cardapio = banco.restaurantes[i].buscarCardapio(texto, usuario.restricaoGluten, 
+                    usuario.restricaoLeite, usuario.restricaoAcucar);
+                if (cardapio.Count > 0)
+                    restaurantes.Add((Restaurante)banco.restaurantes[i]);
+            }
+            return restaurantes;
+        }
+
+        public Document selectRestaurantes (List<Restaurante> restaurantes)
+        {
+            List<SelectOption> options = new List<SelectOption>();
+            for (int i = 0; i < restaurantes.Count; i++)
+            {
+                SelectOption option = new SelectOption();
+                option.Order = i + 1;
+                option.Text = restaurantes.ElementAt<Restaurante>(i).nome;
+                option.Value = new PlainText { Text = restaurantes.ElementAt<Restaurante>(i).nome };
+                options.Add((SelectOption)option);
+            }
+            Document select = new Select
+            {
+                Text = banco.respostas[104],
+                Options = options.ToArray()
+            };
+            
+            return select;
+        }
+
         public Document menuInicial()
         {
             Document opcoes = new Select
@@ -105,6 +139,7 @@ namespace Hackathon1
                     case 105:
                         // Algum prato específico? (salmão, frango, caldo, sopa, ...)
                         // Chamar a função para pesquisar os pratos aqui
+                        
                         if (mensagemUsuario.Contains("Não"))
                         {
                             // pesquisar apenas pelas restrições
@@ -113,9 +148,13 @@ namespace Hackathon1
                         {
                             // pesquisar por restrições e preferências
                         }
+                        List<Restaurante> restaurantes = buscarCardapio(mensagemUsuario, input.From.Name);
                         // Se encontrou
-                        banco.usuarios[input.From.Name].estado = 104;
-                        return null; // Retorna Select dos restaurantes
+                        if (restaurantes.Count > 0)
+                        {
+                            banco.usuarios[input.From.Name].estado = 104;
+                            return selectRestaurantes(restaurantes);
+                        }
                         // Se nao encontrou
                         banco.usuarios[input.From.Name].estado = 105;
                         return new PlainText { Text = banco.respostas[105] };
@@ -131,7 +170,7 @@ namespace Hackathon1
                         else
                         {
                             // Pesquisar a mensagem de input (restaurante) nos fornecedores 
-                            // e retornar o cardápio.
+                            // e retornar o cardápio do restaurante que a pessoa escolheu.
                             // Perguntar se o cliente quer o endereço do estabelecimento no
                             // próprio campo text do Select (estado 106)
                             banco.usuarios[input.From.Name].estado = 106;
